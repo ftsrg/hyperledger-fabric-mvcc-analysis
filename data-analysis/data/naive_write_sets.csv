@@ -1,0 +1,4 @@
+chaincodename,function,key_bytes,value_bytes,total_bytes
+micro-naive,createAsset,2.45,70.45,72.9
+micro-naive,transferWithPocket1,2.4482896579315865,70.44828965793158,72.89657931586318
+micro-naive,transferWithPocket23,2.4560912182436487,70.45609121824364,72.9121824364873

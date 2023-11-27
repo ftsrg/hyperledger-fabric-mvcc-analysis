@@ -1,0 +1,44 @@
+[
+    {
+        "transactionName": "assetBaseExists",
+        "transactionLabel": "A test assetBaseExists transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "createAssetBase",
+        "transactionLabel": "A test createAssetBase transaction",
+        "arguments": [
+            "001",
+            "some value"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "readAssetBase",
+        "transactionLabel": "A test readAssetBase transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "updateAssetBase",
+        "transactionLabel": "A test updateAssetBase transaction",
+        "arguments": [
+            "001",
+            "some other value"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "deleteAssetBase",
+        "transactionLabel": "A test deleteAssetBase transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {}
+    }
+]

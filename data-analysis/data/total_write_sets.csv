@@ -1,0 +1,4 @@
+chaincodename,function,key_bytes,value_bytes,total_bytes
+micro,createAsset,81.8,56.45,138.25
+micro,transferWithPocket1,22.446689337867575,8.0,30.446689337867575
+micro,transferWithPocket23,44.903703703703705,16.0,60.903703703703705

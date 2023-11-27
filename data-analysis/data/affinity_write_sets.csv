@@ -1,0 +1,4 @@
+chaincodename,function,key_bytes,value_bytes,total_bytes
+micro-aff,createAsset,62.0,80.0,142.0
+micro-aff,transferWithPocket1,23.0,8.0,31.0
+micro-aff,transferWithPocket23,24.0,39.0,63.0

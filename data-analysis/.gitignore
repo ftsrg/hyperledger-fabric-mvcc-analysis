@@ -1,0 +1,4 @@
+data/*pockets
+test_results
+test_results.zip
+**.ipynb_checkpoints
