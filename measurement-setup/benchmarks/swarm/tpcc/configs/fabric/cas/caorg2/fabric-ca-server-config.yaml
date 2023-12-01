@@ -1,0 +1,8 @@
+ca:
+  name: ca.org2.example.com
+  certfile: /etc/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem
+  keyfile: /etc/hyperledger/fabric-ca-server-config/key.pem
+tls:
+  enabled: true
+  certfile: /etc/hyperledger/fabric-ca-server-tls/tlsca.org2.example.com-cert.pem
+  keyfile: /etc/hyperledger/fabric-ca-server-tls/key.pem

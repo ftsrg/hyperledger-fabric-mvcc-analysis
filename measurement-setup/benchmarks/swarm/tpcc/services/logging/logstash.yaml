@@ -1,0 +1,27 @@
+version: '3.3'
+
+networks:
+  fabric:
+    driver: overlay
+    attachable: true
+
+services:
+  logstash:
+    image: logstash:7.5.1
+    environment:
+    - LOGSPOUT=ignore
+    - LOG_LEVEL=info
+    volumes:
+    - ~/tpcc/configs/logstash/config/jvm.options:/usr/share/logstash/config/jvm.options
+    - ~/tpcc/configs/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+    - ~/tpcc/configs/logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    expose:
+    - 5000
+    networks:
+    - fabric
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - "node.labels.service==logstash"

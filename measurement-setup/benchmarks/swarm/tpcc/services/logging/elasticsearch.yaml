@@ -1,0 +1,23 @@
+version: '3.3'
+
+networks:
+  fabric:
+    driver: overlay
+    attachable: true
+
+services:
+  elasticsearch:
+    image: elasticsearch:7.5.1
+    environment:
+    - LOGSPOUT=ignore
+    ports:
+      - 9200:9200
+    volumes:
+    - ~/tpcc/configs/elasticsearch/config/jvm.options:/usr/share/elasticsearch/config/jvm.options
+    - ~/tpcc/configs/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    networks:
+    - fabric
+    deploy:
+      placement:
+        constraints:
+          - "node.labels.service==elastic"

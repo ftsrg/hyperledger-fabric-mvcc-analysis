@@ -1,0 +1,53 @@
+{
+	"name": "cborg",
+	"version": "1.0.0",
+	"client": {
+		"tlsEnable": true,
+		"adminCredential": {
+			"id": "exploreradmin",
+			"password": "exploreradminpw"
+		},
+		"enableAuthentication": true,
+        "organization": "CentralBankOrg",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                },
+                "orderer": "300"
+            }
+        }
+	},
+    "channels": {
+        "epengo-channel": {
+            "peers": {
+                "peer0cb": {}
+            }
+        }
+    },
+    "organizations": {
+        "CentralBankOrg": {
+            "mspid": "CentralBankOrgMSP",
+            "peers": [
+                "peer0cb"
+            ],
+            "adminPrivateKey": {
+                "path": "/tmp/crypto/peerOrganizations/cb/users/Admin@cb/msp/keystore/key.pem"
+            },
+            "signedCert": {
+                "path": "/tmp/crypto/peerOrganizations/cb/users/Admin@cb/msp/signcerts/Admin@cb-cert.pem"
+            }
+        }
+    },
+	"peers": {
+        "peer0cb": {
+            "url": "grpcs://peer0cb:7051",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0cb"
+            },
+            "tlsCACerts": {
+                "path": "/tmp/crypto/peerOrganizations/cb/peers/peer0.cb/msp/tlscacerts/tlsca.cb-cert.pem"
+            }
+        }
+	}
+}

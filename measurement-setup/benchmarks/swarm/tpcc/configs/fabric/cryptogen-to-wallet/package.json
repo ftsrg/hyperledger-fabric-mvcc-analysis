@@ -1,0 +1,15 @@
+{
+  "name": "cryptogen-to-wallet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "convert.js",
+  "scripts": {
+    "start": "node convert.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fabric-network": "2.2.11"
+  }
+}

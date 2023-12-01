@@ -1,0 +1,27 @@
+version: '3.3'
+
+networks:
+  fabric:
+    driver: overlay
+    attachable: true
+
+services:
+  fabric-cli:
+    image: hyperledger/fabric-tools:2.4.2
+    environment:
+    - LOGSPOUT=ignore
+    command: /bin/bash /etc/fabric-config/init-network.sh
+    networks:
+    - fabric
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - "node.labels.service==manager"
+    volumes:
+    - ~/tpcc/configs/fabric:/etc/fabric-config
+    - ~/tpcc/configs/src/cbdc:/opt/contracts/cbdc
+    - ~/tpcc/configs/src/micro:/opt/contracts/micro
+    - ~/tpcc/configs/src/micro-naive:/opt/contracts/micro-naive
+    - ~/tpcc/configs/src/micro-aff:/opt/contracts/micro-aff

@@ -1,0 +1,8 @@
+# binaries
+bin/**
+
+# generated files
+crypto-config/**
+config/**
+genesis.block
+*.tx

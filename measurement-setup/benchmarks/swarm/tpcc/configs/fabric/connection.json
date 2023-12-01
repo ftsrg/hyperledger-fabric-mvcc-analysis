@@ -1,0 +1,131 @@
+{
+    "name": "cbdc-tls-noca-network",
+    "version": "1.0.0",
+    "client": {
+        "organization": "FIOrg",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                },
+                "orderer": "300"
+            }
+        }
+    },
+    "channels": {
+        "epengo-channel": {
+            "orderers": [
+                "orderer0.example.com"
+            ],
+            "peers": {
+                "peer0cb": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "peer0fi": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "peer1cb": {
+                    "endorsingPeer": false,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "peer1fi": {
+                    "endorsingPeer": false,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                }
+            }
+        }
+    },
+    "organizations": {
+        "CentralBankOrg": {
+            "mspid": "CentralBankOrgMSP",
+            "peers": [
+                "peer0cb",
+                "peer1cb"
+            ],
+            "adminPrivateKey": {
+                "path": "/resources/crypto-config/peerOrganizations/cb/users/Admin@cb/msp/keystore/key.pem"
+            },
+            "signedCert": {
+                "path": "/resources/crypto-config/peerOrganizations/cb/users/Admin@cb/msp/signcerts/Admin@cb-cert.pem"
+            }
+        },
+        "FIOrg": {
+            "mspid": "FIOrgMSP",
+            "peers": [
+                "peer0fi",
+                "peer1fi"
+            ],
+            "adminPrivateKey": {
+                "path": "/resources/crypto-config/peerOrganizations/fi/users/Admin@fi/msp/keystore/key.pem"
+            },
+            "signedCert": {
+                "path": "/resources/crypto-config/peerOrganizations/fi/users/Admin@fi/msp/signcerts/Admin@fi-cert.pem"
+            }
+        }
+    },
+    "orderers": {
+        "orderer0.example.com": {
+            "url": "grpcs://orderer0:7050",
+            "grpcOptions": {
+                "ssl-target-name-override": "orderer0.example.com"
+            },
+            "tlsCACerts": {
+                "path": "/resources/crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem"
+            },
+            "adminPrivateKeyPEM": {
+				"path": "/resources/crypto-config/ordererOrganizations/example.com/users/Admin@example.com/msp/keystore/key.pem"
+			},
+			"signedCertPEM": {
+				"path": "/resources/crypto-config/ordererOrganizations/example.com/users/Admin@example.com/msp/signcerts/Admin@example.com-cert.pem"
+			}
+        }
+    },
+    "peers": {
+        "peer0cb": {
+            "url": "grpcs://peer0cb:7051",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0cb"
+            },
+            "tlsCACerts": {
+                "path": "/resources/crypto-config/peerOrganizations/cb/peers/peer0.cb/msp/tlscacerts/tlsca.cb-cert.pem"
+            }
+        },
+        "peer0fi": {
+            "url": "grpcs://peer0fi:7051",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0fi"
+            },
+            "tlsCACerts": {
+                "path": "/resources/crypto-config/peerOrganizations/fi/peers/peer0.fi/msp/tlscacerts/tlsca.fi-cert.pem"
+            }
+        },
+        "peer1cb": {
+            "url": "grpcs://peer1cb:7051",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer1cb"
+            },
+            "tlsCACerts": {
+                "path": "/resources/crypto-config/peerOrganizations/cb/peers/peer1.cb/msp/tlscacerts/tlsca.cb-cert.pem"
+            }
+        },
+        "peer1fi": {
+            "url": "grpcs://peer1fi:7051",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer1fi"
+            },
+            "tlsCACerts": {
+                "path": "/resources/crypto-config/peerOrganizations/fi/peers/peer1.fi/msp/tlscacerts/tlsca.fi-cert.pem"
+            }
+        }
+    }
+}

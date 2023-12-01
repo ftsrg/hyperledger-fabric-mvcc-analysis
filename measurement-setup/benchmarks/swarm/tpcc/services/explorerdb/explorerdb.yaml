@@ -1,0 +1,38 @@
+version: '3.3'
+
+#volumes:
+#  pgdata:
+
+networks:
+  fabric:
+    driver: overlay
+    attachable: true
+
+services:
+  explorerdb:
+    networks:
+    - fabric
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+      placement:
+        constraints:
+          - "node.labels.service==manager"
+    image: hyperledger/explorer-db:latest
+    ports:
+      - 5432:5432
+    container_name: explorerdb
+    hostname: explorerdb
+    environment:
+      - LOGSPOUT=ignore
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWORD=password
+    healthcheck:
+      test: "pg_isready -h localhost -p 5432 -q -U postgres"
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      #volumes:
+      #- pgdata:/var/lib/postgresql/data

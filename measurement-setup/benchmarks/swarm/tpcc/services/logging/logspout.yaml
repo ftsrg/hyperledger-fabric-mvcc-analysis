@@ -1,0 +1,26 @@
+version: '3.3'
+
+networks:
+  fabric:
+    driver: overlay
+    attachable: true
+
+services:
+  logspout:
+    image: tiagoreichert/logspout-logstash-multiline
+    environment:
+    - LOGSPOUT=ignore
+#    - MULTILINE_MATCH=first
+#    - MULTILINE_PATTERN=^\d{4}-\d{2}-\d{2}_\d{2}:\d{2}:\d{2}\.\d{3}.*
+    - RETRY_STARTUP=yes
+#    - ROUTE_URIS=multiline+logstash+tcp://logstash:5000
+    - ROUTE_URIS=logstash+tcp://logstash:5000
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+    - fabric
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+        delay: 1s

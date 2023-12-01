@@ -1,0 +1,25 @@
+version: '3.3'
+
+networks:
+  fabric:
+    driver: overlay
+    attachable: true
+
+services:
+  caliper-worker1:
+    image: klenik/caliper-fabric-1.4.17:experimental
+    environment:
+    - CALIPER_PROJECTCONFIG=caliper/caliper.yaml
+    command: launch worker
+    networks:
+    - fabric
+    deploy:
+      mode: replicated
+      replicas: 4
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - "node.labels.service==caliper1"
+    volumes:
+    - ~/tpcc/configs/:/hyperledger/caliper/workspace

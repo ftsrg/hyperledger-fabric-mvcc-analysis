@@ -1,0 +1,25 @@
+version: '3.3'
+
+networks:
+  fabric:
+    driver: overlay
+    attachable: true
+
+services:
+  portainer:
+    image: portainer/portainer
+    environment:
+    - LOGSPOUT=ignore
+    command: -H tcp://tasks.portaineragent:9001 --tlsskipverify --admin-password-file /tmp/portainer_password
+    ports:
+    # Dashboard
+    - 9000:9000
+    - 8000:8000
+    volumes:
+    - ~/tpcc/configs/portainer/default_password.txt:/tmp/portainer_password
+    networks:
+    - fabric
+    deploy:
+      placement:
+        constraints:
+          - "node.labels.service==manager"

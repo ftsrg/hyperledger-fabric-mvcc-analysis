@@ -1,0 +1,198 @@
+workerNum: &worker-num 4
+
+microArgs: &common-micro
+  numAccounts: &account-num 200
+  chaincodeId: micro
+  chaincodeVersion: '1.0.0'
+  timeoutSeconds: 600
+
+microAffArgs: &common-aff
+  numAccounts: &account-num 200
+  chaincodeId: micro-aff
+  chaincodeVersion: '1.0.0'
+  timeoutSeconds: 600
+
+microNaiveArgs: &common-micro-naive
+  numAccounts: &account-num 200
+  chaincodeId: micro-naive
+  chaincodeVersion: '1.0.0'
+  timeoutSeconds: 600
+
+transactionsPerAccount: &tx-per-acc 100
+
+test:
+  workers:
+    type: local
+    number: *worker-num
+  rounds:
+  - label: ping-dispersed
+    requiredWorkers: 1
+    txNumber: 1
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 1
+    callback: ./caliper/ping.js
+    arguments:
+      <<: *common-micro
+      round: ping-dispersed
+  - label: create-accounts-dispersed
+    requiredWorkers: 1
+    txNumber: *account-num
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 50
+    callback: ./caliper/create-accounts.js
+    arguments:
+      <<: *common-micro
+      round: create-dispersed
+  - label: transact-pocket-1w-dispersed
+    requiredWorkers: 1
+    txNumber: 10000
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 30
+    callback: ./caliper/transact-pocket.js
+    arguments:
+      <<: *common-micro
+      round: transact-1w-dispersed
+      #  - label: transact-pocket-2w-dispersed
+      #    requiredWorkers: 2
+      #    txNumber: 10000
+      #    rateControl:
+      #      type: fixed-rate
+      #      opts:
+      #        tps: 60
+      #    callback: ./caliper/transact-pocket.js
+      #    arguments:
+      #      <<: *common-micro
+      #      round: transact-2w-dispersed
+      #  - label: transact-pocket-3w-dispersed
+      #    requiredWorkers: 3
+      #    txNumber: 10000
+      #    rateControl:
+      #      type: fixed-rate
+      #      opts:
+      #        tps: 90
+      #    callback: ./caliper/transact-pocket.js
+      #    arguments:
+      #      <<: *common-micro
+      #      round: transact-3w-dispersed
+      #  - label: transact-pocket-4w-dispersed
+      #    requiredWorkers: *worker-num
+      #    txNumber: 10000
+      #    rateControl:
+      #      type: fixed-rate
+      #      opts:
+      #        tps: 120
+      #    callback: ./caliper/transact-pocket.js
+      #    arguments:
+      #      <<: *common-micro
+      #      round: transact-4w-dispersed
+#  - label: ping-aff
+#    requiredWorkers: 1
+#    txNumber: 1
+#    rateControl:
+#      type: fixed-rate
+#      opts:
+#        tps: 1
+#    callback: ./caliper/ping.js
+#    arguments:
+#      <<: *common-aff
+#      round: ping-aff
+#  - label: create-accounts-aff
+#    requiredWorkers: 1
+#    txNumber: *account-num
+#    rateControl:
+#      type: fixed-rate
+#      opts:
+#        tps: 50
+#    callback: ./caliper/create-accounts-aff.js
+#    arguments:
+#      <<: *common-aff
+#      round: create-aff
+#  - label: transact-pocket-1w-aff
+#    requiredWorkers: 1
+#    txNumber: 10000
+#    rateControl:
+#      type: fixed-rate
+#      opts:
+#        tps: 30
+#    callback: ./caliper/transact-pocket-aff.js
+#    arguments:
+#      <<: *common-aff
+#      round: transact-1w-aff
+  # naive rounds
+  - label: ping-naive
+    requiredWorkers: 1
+    txNumber: 1
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 1
+    callback: ./caliper/ping.js
+    arguments:
+      <<: *common-micro-naive
+      round: ping-naive
+  - label: create-accounts-naive
+    requiredWorkers: 1
+    txNumber: *account-num
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 50
+    callback: ./caliper/create-accounts.js
+    arguments:
+      <<: *common-micro-naive
+      round: create-naive
+  - label: transact-pocket-1w-naive
+    requiredWorkers: 1
+    txNumber: 10000
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 30
+    callback: ./caliper/transact-pocket.js
+    arguments:
+      <<: *common-micro-naive
+      round: transact-1w-naive
+#  - label: transact-pocket-2w-naive
+#    requiredWorkers: 2
+#    txNumber: 10000
+#    rateControl:
+#      type: fixed-rate
+#      opts:
+#        tps: 60
+#    callback: ./caliper/transact-pocket.js
+#    arguments:
+#      <<: *common-micro-naive
+#      round: transact-2w-naive
+#  - label: transact-pocket-3w-naive
+#    requiredWorkers: 3
+#    txNumber: 10000
+#    rateControl:
+#      type: fixed-rate
+#      opts:
+#        tps: 90
+#    callback: ./caliper/transact-pocket.js
+#    arguments:
+#      <<: *common-micro-naive
+#      round: transact-3w-naive
+#  - label: transact-pocket-4w-naive
+#    requiredWorkers: *worker-num
+#    txNumber: 10000
+#    rateControl:
+#      type: fixed-rate
+#      opts:
+#        tps: 120
+#    callback: ./caliper/transact-pocket.js
+#    arguments:
+#      <<: *common-micro-naive
+#      round: transact-4w-naive
+observer:
+  type: local
+  interval: 10
+monitor:
+  type: ['none']

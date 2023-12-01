@@ -1,0 +1,168 @@
+name: Fabric
+version: "1.0"
+mutual-tls: false
+
+caliper:
+  blockchain: fabric
+
+info:
+  Version: 1.4.4
+  Size: 2 Orgs with 4 Peers each
+  Orderer: 1 Raft node
+  Distribution: Docker Swarm
+  StateDB: GoLevelDB
+
+clients:
+  User1@fi:
+    client:
+      organization: FIOrg
+      credentialStore:
+        path: /tmp/hfc-kvs/FIOrg
+        cryptoStore:
+          path: /tmp/hfc-cvs/FIOrg
+      clientPrivateKey:
+        path: fabric/crypto-config/peerOrganizations/fi/users/User1@fi/msp/keystore/key.pem
+      clientSignedCert:
+        path: fabric/crypto-config/peerOrganizations/fi/users/User1@fi/msp/signcerts/User1@fi-cert.pem
+
+  User1@cb:
+    client:
+      organization: CentralBankOrg
+      credentialStore:
+        path: /tmp/hfc-kvs/CentralBankOrg
+        cryptoStore:
+          path: /tmp/hfc-cvs/CentralBankOrg
+      clientPrivateKey:
+        path: fabric/crypto-config/peerOrganizations/cb/users/User1@cb/msp/keystore/key.pem
+      clientSignedCert:
+        path: fabric/crypto-config/peerOrganizations/cb/users/User1@cb/msp/signcerts/User1@cb-cert.pem
+
+
+channels:
+  epengo-channel:
+    created: true
+    orderers:
+    - orderer0.example.com
+    peers:
+      peer0cb:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer0fi:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+        #      peer1cb:
+        #        endorsingPeer: true
+        #        chaincodeQuery: true
+        #        ledgerQuery: true
+        #        eventSource: true
+        #      peer1fi:
+        #        endorsingPeer: true
+        #        chaincodeQuery: true
+        #        ledgerQuery: true
+        #        eventSource: true
+        #      peer2cb:
+        #        endorsingPeer: true
+        #        chaincodeQuery: true
+        #        ledgerQuery: true
+        #        eventSource: true
+        #      peer2fi:
+        #        endorsingPeer: true
+        #        chaincodeQuery: true
+        #        ledgerQuery: true
+        #        eventSource: true
+        #      peer3cb:
+        #        endorsingPeer: true
+        #        chaincodeQuery: true
+        #        ledgerQuery: true
+        #        eventSource: true
+        #      peer3fi:
+        #        endorsingPeer: true
+        #        chaincodeQuery: true
+        #        ledgerQuery: true
+        #        eventSource: true
+
+    chaincodes:
+    - id: micro
+      version: '1.0.0'
+    - id: micro-naive
+      version: '1.0.0'
+    - id: micro-aff
+      version: '1.0.0'
+
+organizations:
+  CentralBankOrg:
+    mspid: CentralBankOrgMSP
+    peers:
+    - peer0cb
+    adminPrivateKey:
+      path: "fabric/crypto-config/peerOrganizations/cb/users/Admin@cb/msp/keystore/key.pem"
+    signedCert:
+      path: "fabric/crypto-config/peerOrganizations/cb/users/Admin@cb/msp/signcerts/Admin@cb-cert.pem"
+  FIOrg:
+    mspid: FIOrgMSP
+    peers:
+    - peer0fi
+    adminPrivateKey:
+      path: "fabric/crypto-config/peerOrganizations/fi/users/Admin@fi/msp/keystore/key.pem"
+    signedCert:
+      path: "fabric/crypto-config/peerOrganizations/fi/users/Admin@fi/msp/signcerts/Admin@fi-cert.pem"
+orderers:
+  orderer0.example.com:
+    url: grpcs://orderer0:7050
+    grpcOptions:
+      ssl-target-name-override: orderer0.example.com
+    tlsCACerts:
+      path: "fabric/crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem"
+peers:
+  peer0cb:
+    url: grpcs://peer0cb:7051
+    grpcOptions:
+      ssl-target-name-override: peer0cb
+    tlsCACerts:
+      path: "fabric/crypto-config/peerOrganizations/cb/peers/peer0.cb/msp/tlscacerts/tlsca.cb-cert.pem"
+  peer0fi:
+    url: grpcs://peer0fi:7051
+    grpcOptions:
+      ssl-target-name-override: peer0fi
+    tlsCACerts:
+      path: "fabric/crypto-config/peerOrganizations/fi/peers/peer0.fi/msp/tlscacerts/tlsca.fi-cert.pem"
+      #  peer1cb:
+      #    url: grpcs://peer1cb:7051
+      #    grpcOptions:
+      #      ssl-target-name-override: peer1cb
+      #    tlsCACerts:
+      #      path: "fabric/crypto-config/peerOrganizations/cb/peers/peer1.cb/msp/tlscacerts/tlsca.cb-cert.pem"
+      #  peer1fi:
+      #    url: grpcs://peer1fi:7051
+      #    grpcOptions:
+      #      ssl-target-name-override: peer1fi
+      #    tlsCACerts:
+      #      path: "fabric/crypto-config/peerOrganizations/fi/peers/peer1.fi/msp/tlscacerts/tlsca.fi-cert.pem"
+      #  peer2cb:
+      #    url: grpcs://peer2cb:7051
+      #    grpcOptions:
+      #      ssl-target-name-override: peer2cb
+      #    tlsCACerts:
+      #      path: "fabric/crypto-config/peerOrganizations/cb/peers/peer2.cb/msp/tlscacerts/tlsca.cb-cert.pem"
+      #  peer2fi:
+      #    url: grpcs://peer2fi:7051
+      #    grpcOptions:
+      #      ssl-target-name-override: peer2fi
+      #    tlsCACerts:
+      #      path: "fabric/crypto-config/peerOrganizations/fi/peers/peer2.fi/msp/tlscacerts/tlsca.fi-cert.pem"
+      #  peer3cb:
+      #    url: grpcs://peer3cb:7051
+      #    grpcOptions:
+      #      ssl-target-name-override: peer3cb
+      #    tlsCACerts:
+      #      path: "fabric/crypto-config/peerOrganizations/cb/peers/peer3.cb/msp/tlscacerts/tlsca.cb-cert.pem"
+      #  peer3fi:
+      #    url: grpcs://peer3fi:7051
+      #    grpcOptions:
+      #      ssl-target-name-override: peer3fi
+      #    tlsCACerts:
+      #      path: "fabric/crypto-config/peerOrganizations/fi/peers/peer3.fi/msp/tlscacerts/tlsca.fi-cert.pem"

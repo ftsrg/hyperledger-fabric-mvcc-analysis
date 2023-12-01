@@ -1,0 +1,19 @@
+# IDE files
+.idea/
+**/.idea/
+
+# generated
+node_modules/*
+logs/*
+ssh_*.sh
+analysis/.ipynb_checkpoints/*
+package-lock.json
+
+# sensitive
+node-config*.yaml
+dumps/*
+results/*
+analysis/local-metrics/data/*
+
+benchmarks/swarm/tpcc/configs/jmeter/resources/*
+signutil/node_modules/*

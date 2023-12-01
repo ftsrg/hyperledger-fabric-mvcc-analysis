@@ -1,0 +1,38 @@
+version: '3.3'
+
+networks:
+  fabric:
+    driver: overlay
+    attachable: true
+
+services:
+  orderer0:
+    image: hyperledger/fabric-orderer:2.4.2
+    environment:
+    - FABRIC_LOGGING_SPEC=info
+    - FABRIC_LOGGING_FORMAT=%{time:2006-01-02_15:04:05.000 MST} | %{level} | %{module} | %{message}
+    - GODEBUG=netdns=go
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    expose:
+    - 7050
+    - 9000
+    networks:
+    - fabric
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 1s
+      placement:
+        constraints:
+          - "node.labels.service==orderer0"
+    volumes:
+    # genesis block
+    - ~/tpcc/configs/fabric/:/etc/hyperledger/config
+    # config file
+    - ~/tpcc/configs/fabric/orderers/orderer.yaml:/etc/hyperledger/fabric/orderer.yaml
+    # crypto
+    - ~/tpcc/configs/fabric/crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/:/etc/hyperledger/msp/orderer
+    - ~/tpcc/configs/fabric/crypto-config/peerOrganizations/cb/ca/:/etc/hyperledger/msp/caOrg1
+    - ~/tpcc/configs/fabric/crypto-config/peerOrganizations/fi/ca/:/etc/hyperledger/msp/caOrg2
+    - ~/tpcc/configs/fabric/crypto-config/ordererOrganizations/example.com/ca/:/etc/hyperledger/msp/caOrderer

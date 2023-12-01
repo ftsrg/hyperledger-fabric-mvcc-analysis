@@ -1,0 +1,42 @@
+version: '3.3'
+
+#volumes:
+#  walletstore:
+
+networks:
+  fabric:
+    driver: overlay
+    attachable: true
+
+services:
+  explorer:
+    networks:
+    - fabric
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+      placement:
+        constraints:
+          - "node.labels.service==manager"
+    image: hyperledger/explorer:latest
+    container_name: explorer
+    hostname: explorer
+    environment:
+      - LOGSPOUT=ignore
+      - DATABASE_HOST=explorerdb
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWD=password
+      - LOG_LEVEL_APP=info
+      - LOG_LEVEL_DB=info
+      - LOG_LEVEL_CONSOLE=debug
+      - LOG_CONSOLE_STDOUT=true
+      - DISCOVERY_AS_LOCALHOST=false
+    volumes:
+      - ./../../configs/explorer/config.json:/opt/explorer/app/platform/fabric/config.json
+      - ./../../configs/explorer/connection:/opt/explorer/app/platform/fabric/connection-profile
+      - ./../../configs/fabric/crypto-config:/tmp/crypto
+        #- walletstore:/opt/explorer/wallet
+    ports:
+      - 8080:8080

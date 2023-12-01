@@ -1,0 +1,25 @@
+{
+  "name": "fabric-performance",
+  "version": "1.0.0",
+  "description": "Artifacts for measuring Hyperledger Fabric performance",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aklenik/fabric-performance.git"
+  },
+  "author": "Attila Klenik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aklenik/fabric-performance/issues"
+  },
+  "homepage": "https://github.com/aklenik/fabric-performance#readme",
+  "dependencies": {
+    "@klenik/cluster-admin": "^0.18.0"
+  }
+}

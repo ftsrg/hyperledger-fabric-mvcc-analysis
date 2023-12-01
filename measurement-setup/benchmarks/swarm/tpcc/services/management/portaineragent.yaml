@@ -1,0 +1,31 @@
+version: '3.3'
+
+networks:
+  fabric:
+    driver: overlay
+    attachable: true
+
+services:
+  portaineragent:
+    image: portainer/agent
+    environment:
+    - LOGSPOUT=ignore
+    - AGENT_CLUSTER_ADDR=tasks.portaineragent
+    - CAP_HOST_MANAGEMENT=1
+    ports:
+    - target: 9001
+      published: 9001
+      protocol: tcp
+      # to bypass the routing mesh
+      mode: host
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /var/lib/docker/volumes:/var/lib/docker/volumes
+    - /:/host
+    networks:
+    - fabric
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+        delay: 5s

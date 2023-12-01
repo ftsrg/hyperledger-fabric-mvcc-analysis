@@ -1,0 +1,42 @@
+version: '3.3'
+
+networks:
+  fabric:
+    driver: overlay
+    attachable: true
+
+services:
+  peer0cb:
+    image: hyperledger/fabric-peer:2.4.2
+    environment:
+    - FABRIC_LOGGING_SPEC=info
+    - FABRIC_LOGGING_FORMAT=%{time:2006-01-02_15:04:05.000 MST} | %{level} | %{module} | %{message}
+    - GODEBUG=netdns=go
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: peer node start
+    expose:
+    - 7051
+    - 9000
+    networks:
+    - fabric
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+      placement:
+        constraints:
+          - "node.labels.service==peer0cb"
+    volumes:
+    - /var/run/:/host/var/run/
+    - ~/tpcc/configs/fabric/peers/peer0cb/core.yaml:/etc/hyperledger/fabric/core.yaml
+    - ~/tpcc/configs/fabric/crypto-config/peerOrganizations/cb/peers/peer0.cb/:/etc/hyperledger/msp/peer
+    - ~/tpcc/configs/fabric/crypto-config/peerOrganizations/cb/ca/:/etc/hyperledger/msp/caOrg1
+    - ~/tpcc/configs/fabric/crypto-config/peerOrganizations/fi/ca/:/etc/hyperledger/msp/caOrg2
+    - ~/tpcc/configs/fabric/crypto-config/ordererOrganizations/example.com/ca/:/etc/hyperledger/msp/caOrderer
+    #- inmemory:/var/hyperledger/production
+
+#volumes:
+#   inmemory:
+#     driver_opts:
+#       type: tmpfs
+#       device: tmpfs

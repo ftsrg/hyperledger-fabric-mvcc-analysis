@@ -1,0 +1,55 @@
+OrdererOrgs:
+- Name: Orderer
+  Domain: example.com
+
+  Template:
+      Count: 1
+
+PeerOrgs:
+- Name: CentralBankOrg
+  Domain: cb
+  Specs:
+  - Hostname: peer0
+    SANS:
+    - peer0.centralbank.com
+    - peer0cb
+  - Hostname: peer1
+    SANS:
+    - peer1.centralbank.com
+    - peer1cb
+  - Hostname: peer2
+    SANS:
+    - peer2.centralbank.com
+    - peer2cb
+  - Hostname: peer3
+    SANS:
+    - peer3.centralbank.com
+    - peer3cb
+  Template:
+      Count: 4
+  Users:
+      Count: 4
+
+- Name: FIOrg
+  Domain: fi
+  Specs:
+  - Hostname: peer0
+    SANS:
+    - peer0.fi.com
+    - peer0fi
+  - Hostname: peer1
+    SANS:
+    - peer1.fi.com
+    - peer1fi
+  - Hostname: peer2
+    SANS:
+    - peer2.fi.com
+    - peer2fi
+  - Hostname: peer3
+    SANS:
+    - peer3.fi.com
+    - peer3fi
+  Template:
+      Count: 4
+  Users:
+      Count: 4

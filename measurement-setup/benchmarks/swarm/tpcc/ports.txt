@@ -1,0 +1,20 @@
+sudo ufw allow 3000,5000,5601,8000,9000,9001,9090,9200/tcp
+
+4789 UDP: container ingress network
+7946 TCP: container network discovery
+
+1883: mosquitto
+3000: grafana *
+5000: logstash
+5601: kibana *
+8000: portainer *
+8080: cadvisor
+8086: influxd
+8088: influxd
+9000: portainer dashboard
+9001: portaineragent
+9090: prometheus *
+9100: nodeexporter
+9200: elasticsearch *
+
+* exposed outside of cluster

@@ -1,0 +1,54 @@
+{
+	"name": "fabric",
+	"version": "1.0.0",
+	"client": {
+		"tlsEnable": true,
+		"adminCredential": {
+			"id": "exploreradmin",
+			"password": "exploreradminpw"
+		},
+		"enableAuthentication": true,
+        "organization": "FIOrg",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                },
+                "orderer": "300"
+            }
+        }
+	},
+    "channels": {
+        "epengo-channel": {
+
+            "peers": {
+                "peer0fi": {}
+            }
+        }
+    },
+    "organizations": {        
+        "FIOrg": {
+            "mspid": "FIOrgMSP",
+            "peers": [
+                "peer0fi"
+            ],
+            "adminPrivateKey": {
+                "path": "/tmp/crypto/peerOrganizations/fi/users/Admin@fi/msp/keystore/key.pem"
+            },
+            "signedCert": {
+                "path": "/tmp/crypto/peerOrganizations/fi/users/Admin@fi/msp/signcerts/Admin@fi-cert.pem"
+            }
+        }
+    },
+	"peers": {
+        "peer0fi": {
+            "url": "grpcs://peer0fi:7051",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0fi"
+            },
+            "tlsCACerts": {
+                "path": "/tmp/crypto/peerOrganizations/fi/peers/peer0.fi/msp/tlscacerts/tlsca.fi-cert.pem"
+            }
+        }
+	}
+}
